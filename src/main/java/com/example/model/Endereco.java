@@ -5,7 +5,12 @@ import java.io.Serializable;
 
 @Entity
 public class Endereco implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2256233256001452606L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
