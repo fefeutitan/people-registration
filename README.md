@@ -35,7 +35,7 @@ Este projeto é uma aplicação web que permite o cadastro e gerenciamento de pe
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/your-repository/people-registration.git
+   git clone https://github.com/fefeutitan/people-registration.git
    cd people-registration
    ```
 
@@ -88,7 +88,7 @@ Este projeto é uma aplicação web que permite o cadastro e gerenciamento de pe
 
 ### Contato
 
-Para dúvidas ou mais informações, entre em contato com [seu-email@exemplo.com].
+Para dúvidas ou mais informações, entre em contato com [fernando.hle@gmail.com].
 
 ---
 
