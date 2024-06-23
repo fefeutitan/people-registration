@@ -1,15 +1,28 @@
 package com.example.repository;
 
 import com.example.model.Pessoa;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ejb.Stateless;
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Stateless
 public class PessoaRepository {
-    @PersistenceContext(unitName = "peoplePU")
+    @PersistenceContext
     private EntityManager em;
+
+    public void setEntityManager(EntityManager em) {
+        this.em = em;
+    }
+
+    @Transactional
+    public void salvar(Pessoa pessoa) {
+        em.persist(pessoa);
+    }
+
+    public List<Pessoa> listar() {
+        return em.createQuery("SELECT p FROM Pessoa p", Pessoa.class).getResultList();
+    }
 
     public void save(Pessoa pessoa) {
         em.persist(pessoa);

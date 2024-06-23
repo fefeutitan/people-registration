@@ -17,7 +17,7 @@ public class PessoaController {
     private List<Pessoa> pessoas;
 
     public void save() {
-        pessoaRepository.save(pessoa);
+        pessoaRepository.salvar(pessoa);
         pessoa = new Pessoa();
         loadPessoas();
     }

@@ -1,8 +1,11 @@
-version: '3'
+version: '3.1'
+
 services:
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: postgres:12
+    environment:
+      POSTGRES_DB: people_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
     ports:
       - "5432:5432"

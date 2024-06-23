@@ -1,0 +1,5 @@
+com\example\model\Endereco.class
+com\example\MainApp.class
+com\example\controller\PessoaController.class
+com\example\model\Pessoa.class
+com\example\repository\PessoaRepository.class
