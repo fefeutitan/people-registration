@@ -1,38 +1,42 @@
 package com.example.model;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Pessoa implements Serializable {
-    public Pessoa() {
-		// TODO Auto-generated constructor stub
-	}
+public class Pessoa {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(length = 150, nullable = false)
     private String nome;
-
     private int idade;
-
-    @Column(length = 2, nullable = false)
     private String sexo;
-    
+
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Endereco> enderecos;
+
     // Getters and Setters
     
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return Objects.equals(id, pessoa.id);
+    }
+
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -45,8 +49,8 @@ public class Pessoa implements Serializable {
 		return idade;
 	}
 
-	public void setIdade(int i) {
-		this.idade = i;
+	public void setIdade(int idade) {
+		this.idade = idade;
 	}
 
 	public String getSexo() {
@@ -56,4 +60,17 @@ public class Pessoa implements Serializable {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+
+	public Set<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(Set<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	@Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

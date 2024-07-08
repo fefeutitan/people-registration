@@ -1,32 +1,19 @@
 package com.example.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-public class Endereco implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2256233256001452606L;
+public class Endereco {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(length = 2, nullable = false)
     private String estado;
-
-    @Column(length = 100, nullable = false)
     private String cidade;
-
-    @Column(length = 100, nullable = false)
     private String logradouro;
-
-    @Column(nullable = false)
     private int numero;
-
-    @Column(length = 8, nullable = false)
     private String cep;
 
     @ManyToOne
@@ -34,4 +21,17 @@ public class Endereco implements Serializable {
     private Pessoa pessoa;
 
     // Getters and Setters
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Endereco endereco = (Endereco) o;
+        return Objects.equals(id, endereco.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

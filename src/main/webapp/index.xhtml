@@ -9,37 +9,21 @@
     <h:form>
         <p:panel header="Cadastro de Pessoa">
             <h:panelGrid columns="2">
-                <h:outputLabel value="Nome:" />
-                <h:inputText value="#{pessoaController.pessoa.nome}" />
-                <h:outputLabel value="Idade:" />
-                <p:calendar value="#{pessoaController.pessoa.idade}" pattern="dd/MM/yyyy"/>
-                <h:outputLabel value="Sexo:" />
-                <h:selectOneMenu value="#{pessoaController.pessoa.sexo}">
-                    <f:selectItem itemValue="M" itemLabel="Masculino" />
-                    <f:selectItem itemValue="F" itemLabel="Feminino" />
-                </h:selectOneMenu>
-            </h:panelGrid>
-            <p:commandButton value="Salvar" action="#{pessoaController.save}" update=":form:pessoas" />
-        </p:panel>
+                <h:outputLabel for="nome" value="Nome:" />
+                <h:inputText id="nome" value="#{pessoaController.pessoa.nome}" required="true"/>
 
-        <p:dataTable var="p" value="#{pessoaController.pessoas}" id="pessoas" paginator="true" rows="10">
-            <p:column headerText="ID">
-                <h:outputText value="#{p.id}" />
-            </p:column>
-            <p:column headerText="Nome">
-                <h:outputText value="#{p.nome}" />
-            </p:column>
-            <p:column headerText="Idade">
-                <h:outputText value="#{p.idade}" />
-            </p:column>
-            <p:column headerText="Sexo">
-                <h:outputText value="#{p.sexo}" />
-            </p:column>
-            <p:column headerText="Ações">
-                <p:commandButton value="Editar" action="#{pessoaController.edit(p)}" update=":form:panel" />
-                <p:commandButton value="Excluir" action="#{pessoaController.delete(p)}" update=":form:pessoas" />
-            </p:column>
-        </p:dataTable>
+                <h:outputLabel for="idade" value="Idade:" />
+                <h:inputText id="idade" value="#{pessoaController.pessoa.idade}" required="true"/>
+
+                <h:outputLabel for="sexo" value="Sexo:" />
+                <h:selectOneMenu id="sexo" value="#{pessoaController.pessoa.sexo}">
+                    <f:selectItem itemValue="M" itemLabel="Masculino"/>
+                    <f:selectItem itemValue="F" itemLabel="Feminino"/>
+                </h:selectOneMenu>
+
+                <p:commandButton value="Salvar" action="#{pessoaController.salvar}" update="@form"/>
+            </h:panelGrid>
+        </p:panel>
     </h:form>
 </h:body>
 </html>
