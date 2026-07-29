@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Cadastro de Pessoas</title>
 </h:head>
 <h:body>
-    <h:form>
+    <h:form id="pessoaForm">
         <p:panel header="Cadastro de Pessoa">
             <h:panelGrid columns="2">
                 <h:outputLabel for="nome" value="Nome:" />
@@ -21,8 +22,49 @@
                     <f:selectItem itemValue="F" itemLabel="Feminino"/>
                 </h:selectOneMenu>
 
-                <p:commandButton value="Salvar" action="#{pessoaController.salvar}" update="@form"/>
+                <h:panelGroup>
+                    <p:commandButton value="Salvar"
+                                     action="#{pessoaController.save}"
+                                     rendered="#{not pessoaController.editing}"
+                                     update=":pessoaForm :pessoaTable"/>
+                    <p:commandButton value="Atualizar"
+                                     action="#{pessoaController.update}"
+                                     rendered="#{pessoaController.editing}"
+                                     update=":pessoaForm :pessoaTable"/>
+                    <p:commandButton value="Cancelar"
+                                     action="#{pessoaController.resetForm}"
+                                     immediate="true"
+                                     process="@this"
+                                     update=":pessoaForm"
+                                     rendered="#{pessoaController.editing}"/>
+                </h:panelGroup>
             </h:panelGrid>
+        </p:panel>
+    </h:form>
+
+    <h:form id="pessoaTable">
+        <p:panel header="Pessoas Cadastradas">
+            <p:dataTable value="#{pessoaController.pessoas}" var="pessoa" emptyMessage="Nenhuma pessoa cadastrada.">
+                <p:column headerText="Nome">
+                    <h:outputText value="#{pessoa.nome}" />
+                </p:column>
+                <p:column headerText="Idade">
+                    <h:outputText value="#{pessoa.idade}" />
+                </p:column>
+                <p:column headerText="Sexo">
+                    <h:outputText value="#{pessoa.sexo eq 'M' ? 'Masculino' : 'Feminino'}" />
+                </p:column>
+                <p:column headerText="Acoes">
+                    <p:commandButton value="Editar"
+                                     action="#{pessoaController.edit(pessoa)}"
+                                     process="@this"
+                                     update=":pessoaForm" />
+                    <p:commandButton value="Excluir"
+                                     action="#{pessoaController.delete(pessoa)}"
+                                     process="@this"
+                                     update=":pessoaTable :pessoaForm" />
+                </p:column>
+            </p:dataTable>
         </p:panel>
     </h:form>
 </h:body>

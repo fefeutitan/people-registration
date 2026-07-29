@@ -1,95 +1,57 @@
-# people-registration
-Cadastro de pessoas
+# People Registration
 
-### README
+Aplicacao web para cadastro de pessoas com JSF, PrimeFaces, JPA/Hibernate e PostgreSQL.
 
-## Cadastro de Pessoas
+## Requisitos
 
-Este projeto é uma aplicação web que permite o cadastro e gerenciamento de pessoas e seus respectivos endereços. A aplicação é construída utilizando Java Server Faces (JSF) com PrimeFaces para a interface do usuário, PostgreSQL como banco de dados relacional e Hibernate como implementação de JPA. A injeção de dependências é realizada via EJB. 
-
-### Decisões Técnicas e Arquiteturais
-
-1. **Java Server Faces (JSF):** Escolhido por sua integração com bibliotecas de componentes visuais como PrimeFaces, facilitando a criação de interfaces ricas para aplicações web.
-2. **PrimeFaces:** Usado para melhorar a interface do usuário com componentes visuais modernos e responsivos.
-3. **PostgreSQL:** Selecionado como banco de dados relacional por sua robustez, desempenho e suporte a funcionalidades avançadas.
-4. **Hibernate:** Implementação de JPA que facilita o mapeamento objeto-relacional e abstrai a complexidade de interagir diretamente com o banco de dados.
-5. **EJB:** Utilizado para injeção de dependências e para implementar a lógica de negócios de forma desacoplada e transacional.
-6. **Docker:** Usado para facilitar a configuração e execução do banco de dados PostgreSQL.
-
-### Justificativa para o Uso de Frameworks/Bibliotecas
-
-- **PrimeFaces:** Simplifica a criação de interfaces de usuário com componentes prontos para uso e altamente configuráveis.
-- **Hibernate:** Reduz a complexidade do mapeamento objeto-relacional e proporciona uma camada de abstração sobre o acesso a dados.
-- **EJB:** Permite a criação de componentes modulares e transacionais, facilitando a manutenção e escalabilidade da aplicação.
-
-### Instruções para Compilar e Executar o Projeto
-
-#### Pré-requisitos
-
-- JDK 8 ou superior
+- JDK 8+
 - Maven
 - Docker e Docker Compose
+- Servidor Java EE compativel com JSF, EJB e JPA, como WildFly, Payara ou TomEE
 
-#### Passo a Passo
+## Banco de dados
 
-1. **Clone o repositório:**
+O projeto inclui uma configuracao simples do PostgreSQL em `src/main/docker/docker-compose.yml`.
 
-   ```bash
-   git clone https://github.com/fefeutitan/people-registration.git
-   cd people-registration
-   ```
+```bash
+cd src/main/docker
+docker-compose up -d
+```
 
-2. **Configurar e iniciar o banco de dados PostgreSQL com Docker:**
+Por padrao, a aplicacao usa:
 
-   ```bash
-   cd docker
-   docker-compose up -d
-   ```
+- Banco: `people_db`
+- Usuario: `postgres`
+- Senha: `root`
+- URL JDBC: `jdbc:postgresql://localhost:5432/people_db`
 
-3. **Compilar e empacotar a aplicação:**
+## Build
 
-   ```bash
-   mvn clean package
-   ```
+```bash
+mvn clean package
+```
 
-4. **Implantar a aplicação em um servidor de aplicação compatível com Java EE (por exemplo, WildFly, Payara, TomEE):**
+O artefato gerado fica em `target/people-registration.war`.
 
-   - Copie o arquivo `people-registration.war` gerado na pasta `target` para o diretório de implantação do seu servidor de aplicação.
+## Deploy
 
-5. **Acesse a aplicação:**
+Publique o arquivo WAR em um servidor de aplicacao compativel com Java EE.
 
-   Abra um navegador web e acesse `http://localhost:8080/people-registration`.
+Depois do deploy, acesse:
 
-### Instruções para Executar os Testes
+```text
+http://localhost:8080/people-registration
+```
 
-1. **Executar testes unitários:**
+## Estrutura
 
-   ```bash
-   mvn test
-   ```
+- `src/main/java`: codigo-fonte Java
+- `src/main/resources/META-INF/persistence.xml`: configuracao JPA
+- `src/main/webapp`: paginas JSF e descritores web
+- `src/main/docker`: arquivos de suporte ao PostgreSQL local
 
-2. **Testes de integração:**
+## Observacoes
 
-   Testes de integração podem ser executados durante a fase de integração contínua ou manualmente configurando um ambiente de teste similar ao ambiente de produção.
-
-### Notas Adicionais
-
-- **Estrutura de Pastas:**
-  - `src/main/java`: Contém o código fonte da aplicação.
-  - `src/main/resources`: Contém recursos da aplicação, incluindo o arquivo `persistence.xml`.
-  - `src/main/webapp`: Contém os arquivos da interface do usuário.
-  - `docker`: Contém o `Dockerfile` e o `docker-compose.yml` para configuração do banco de dados.
-
-- **Configuração do Banco de Dados:**
-  - O banco de dados é configurado para rodar no contêiner Docker e pode ser acessado via `jdbc:postgresql://db:5432/people_db`.
-
-- **Persistência:**
-  - A configuração de persistência está definida no arquivo `persistence.xml`, que mapeia as entidades `Pessoa` e `Endereco` e define as propriedades de conexão com o banco de dados.
-
-### Contato
-
-Para dúvidas ou mais informações, entre em contato com [fernando.hle@gmail.com].
-
----
-
-Esta documentação foi criada para fornecer uma visão clara sobre a configuração e execução do projeto. Sinta-se à vontade para ajustar conforme necessário.
+- O projeto foi simplificado para o fluxo web; a classe standalone `MainApp` foi removida.
+- O repositorio `PessoaRepository` agora expoe apenas os metodos usados pela aplicacao.
+- Se o servidor de aplicacao exigir datasource JTA gerenciado, adapte o `persistence.xml` para usar o datasource do servidor.
